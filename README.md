@@ -22,12 +22,13 @@ A multi-module [**Mindustry**](https://github.com/Anuken/Mindustry) mod template
 Install Java 8 or higher *(as referenced in [**#Requirements**](#Requirements))*.
 
 ### Windows
-`gradlew main:dist`: Creates a distributable `.jar` compatible only on desktop version.
-`gradlew main:dex`: Dexifies the desktop `.jar` file to be used [**here**](#L26).
+`gradlew main:dist`: Creates a distributable `.jar` compatible only on desktop version. <br>
+`gradlew main:dex`: Dexifies the desktop `.jar` file to be used [**here**](#L26). <br>
 `gradlew main:distDex`: Combines the desktop `.jar` and classes `.dex` into 1 cross-platform `.jar` file, compatible on both desktop and Android version *(refer to [**#Android**](#Android))*.
 
-### *nix
-Same as above, but replace `gradlew` with `./gradlew`. If the program returns with `Permission Denied` or `Command Not Found`, execute `chmod +x ./gradlew` and the `./gradlew` should work fine. Do this only *once*.
+### \*nix
+Same as above, but replace `gradlew` with `./gradlew`. <br>
+If the program returns with `Permission Denied` or `Command Not Found`, execute `chmod +x ./gradlew` and the `./gradlew` should work fine. Do this only *once*.
 
 ### Android
 #### Windows
