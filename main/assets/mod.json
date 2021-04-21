@@ -1,0 +1,10 @@
+{
+    "name": "mindustry-mod-template",
+    "displayName": "Mindustry Mod Template",
+    "author": "GlennFolker",
+    "version": "1.0",
+    "minGameVersion": 126.2,
+    "repo": "GlennFolker/Mindustry-ModTemplate",
+    "java": true,
+    "main": "template.Template"
+}

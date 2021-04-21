@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url 'https://jitpack.io' }
+    }
+
+    dependencies {
+        classpath "com.github.Anuken.Mindustry:core:$mindustryVersion"
+        classpath "com.github.Anuken.Arc:arc-core:$mindustryVersion"
+        classpath "com.github.Anuken:jabel:$jabelVersion"
+    }
+}
+
+allprojects {
+    apply plugin: 'java'
+
+    // [subject] Sync this with your mod.json.
+    version '1.0'
+    // [subject] Change to your own GitHub username.
+    group 'com.github.GlennFolker'
+
+    ext {
+        // Whether the gradle daemon thread is ran in Windows system.
+        isWindows = {
+            return System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')
+        }
+
+        // The Android SDK root. Refer to the README.md
+        sdkRoot = {
+            return System.getenv('ANDROID_SDK_ROOT')
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+configure(subprojects) {
+    tasks.withType(JavaCompile).all {
+        // Targets the class compatibility version to Java 8.
+        targetCompatibility = 8
+
+        // [subject] Use Java 9+ syntaxes in source files for convenience. Update the source compatibility version at your own risk.
+        sourceCompatibility = 15
+
+        // Backwards compatibility for Java 8.
+        options.fork = true
+        if(JavaVersion.current() != JavaVersion.VERSION_1_8) {
+            options.compilerArgs.addAll(['--release', '8', '--enable-preview'])
+        }
+
+        doFirst {
+            options.compilerArgs = options.compilerArgs.findAll { it != '--enable-preview' }
+        }
+    }
+}

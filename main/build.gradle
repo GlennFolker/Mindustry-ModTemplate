@@ -1,0 +1,81 @@
+sourceSets.main {
+    // The main source code directory, such as Java source files.
+    java.srcDirs = ['src/']
+}
+
+ext {
+    assetsFolder = {
+        return 'assets/'
+    }
+}
+
+// Assign project dependencies here.
+// 'compileOnly' uses the binary only for compiling, whereas 'implementation' also includes it to the JAR.
+dependencies {
+    // Uses the Mindustry & Arc binaries for compliance but does not include it in the main JAR. Don't change unless you want your mod to be broken.
+    compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
+    compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
+
+    // Downgrades the Java 9+ syntaxes to Java 8 for compatibility.
+    annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
+}
+
+// Builds the JAR that includes the compiled source files and assets; compatible for desktop version only.
+task dist(type: Jar, dependsOn: configurations.runtimeClasspath) {
+    archiveFileName = "${modName}.jar"
+
+    from files(sourceSets.main.output.classesDirs)
+    from files(sourceSets.main.output.resourcesDir)
+    from configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    from files(file(assetsFolder()))
+}
+
+// Dexifies the desktop JAR.
+task dex(dependsOn: dist) {
+    def jarArtifact = file(tasks.dist.archiveFile.get())
+    def dexedArtifact = new File("$buildDir/libs", 'dexed.jar')
+
+    doLast { exec {
+        workingDir "$buildDir/libs"
+
+        // Collects the compile and runtime classpath to be used by the dexifier.
+        def command = ['d8']
+        def files = (
+            configurations.compileClasspath.asList() +
+            configurations.runtimeClasspath.asList() +
+            [new File("${sdkRoot()}/platforms/android-$sdkVersion/android.jar")]
+        )
+
+        // Format: '--classpath path1 --classpath path2 ...'.
+        for(def file : files) {
+            command += '--classpath'
+            command += file.path
+        }
+
+        // Full command: 'd8 --classpath ... --min-api [sdkVersion] --output [dexedArtifact] [jarArtifact]'.
+        command += ['--min-api', sdkVersion, "--output", dexedArtifact, jarArtifact]
+        if(isWindows()) {
+            // Add 'cmd /c' for Windows.
+            commandLine('cmd', '/c', *command)
+        } else {
+            commandLine(*command)
+        }
+    }}
+}
+
+// Combines the desktop JAR and the classes dex into 1 cross-platform mod JAR. Use this JAR in GitHub Releases.
+task distDex(type: Jar, dependsOn: [dist, dex]) {
+    archiveFileName = "dexed-${modName}.jar"
+
+    def jarArtifact = file(tasks.dist.archiveFile.get())
+    def dexedArtifact = new File("$buildDir/libs", 'dexed.jar')
+
+    from zipTree(jarArtifact)
+    from zipTree(dexedArtifact)
+
+    // Deletes the preceeding JARs.
+    doLast { delete {
+        delete jarArtifact
+        delete dexedArtifact
+    }}
+}
