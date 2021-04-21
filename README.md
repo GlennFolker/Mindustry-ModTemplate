@@ -8,14 +8,15 @@ A multi-module [**Mindustry**](https://github.com/Anuken/Mindustry) mod template
 
 ## Usage
 1. Learning Java itself is mandatory for your own good. If you don't have a moderate Java knowledge, learn them first before stepping into making Mindustry mods.
-2. Clone the repository to your end:
+2. Generate a new repository with this template.
+3. Clone the repository to your end:
     - Open your command line, then clone your repository by executing `git clone https://github.com/<YourUsername>/<YourRepository>`. `cd` to the directory of the cloned repository to set the current working directory.
-3. Change **every** package declaration and folder names into what you desire. For example, the current packages are `template.**` and you want to change to `modname.**`:
+4. Change **every** package declaration and folder names into what you desire. For example, the current packages are `template.**` and you want to change to `modname.**`:
     - Replace the folder directory from all modules from `src/template/**` to `src/modname/**`.
     - Go through every Java file and replace `package template.**` with `package modname.**`, and all `import template.**` with `import modname.**`.
     - If you found anything that is related to package declaration, change it to match your mod's own package name.
-4. Go through every file and replace everything necessary *(usually noted with `[subject]` in the comment)*.
-5. Track the edited file by executing `git add .`. Commit your changes by executing `git commit -m <message>`, then push your changes to GitHub by executing `git push`.
+5. Go through every file and replace everything necessary *(usually noted with `[subject]` in the comment)*.
+6. Track the edited file by executing `git add .`. Commit your changes by executing `git commit -m <message>`, then push your changes to GitHub by executing `git push`.
 
 ## Compiling
 Install Java 8 or higher *(as referenced in [**#Requirements**](#Requirements))*.
