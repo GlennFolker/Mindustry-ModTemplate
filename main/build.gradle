@@ -1,6 +1,6 @@
 sourceSets.main {
     // The main source code directory, such as Java source files.
-    java.srcDirs = ['src/']
+    java.srcDirs = ['src/', "$buildDir/generated/sources/annotationProcessor/java/main"]
 }
 
 ext {
@@ -18,6 +18,16 @@ dependencies {
 
     // Downgrades the Java 9+ syntaxes to Java 8 for compatibility.
     annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
+
+    // Asset-loading automations.
+    annotationProcessor project(':automation')
+
+    compileJava.options.compilerArgs += [
+        '-processor',
+
+        // [change] Change it to your own package declaration
+        'template.automation.AssetsPlugin'
+    ];
 }
 
 // Builds the JAR that includes the compiled source files and assets; compatible for desktop version only.

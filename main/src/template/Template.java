@@ -2,9 +2,11 @@ package template;
 
 import arc.*;
 import arc.util.*;
+import mindustry.game.EventType.*;
 import mindustry.gen.*;
 import mindustry.mod.*;
 import mindustry.world.*;
+import template.gen.*;
 
 import static mindustry.Vars.*;
 
@@ -14,6 +16,9 @@ public class Template extends Mod {
         // Waiting for FileTreeInitEvent to be fired is mandatory for assets loading.
 
         Log.infoTag("template", "[scarlet]You shall not pass.[]");
+
+        Events.on(FileTreeInitEvent.class, e -> ModSounds.load());
+        Events.on(DisposeEvent.class, e -> ModSounds.dispose());
     }
 
     @Override

@@ -1,0 +1,18 @@
+// Do not change this file unless you know what you're doing.
+
+sourceSets.main {
+    java.srcDirs = ['src/']
+}
+
+targetCompatibility = 8
+sourceCompatibility = 8
+
+dependencies {
+    // Uses the Mindustry & Arc binaries for compliance.
+    implementation "com.github.Anuken.Mindustry:core:$mindustryVersion"
+    implementation "com.github.Anuken.Arc:arc-core:$mindustryVersion"
+    implementation "com.squareup:javapoet:$javapoetVersion"
+
+    // Downgrades the Java 9+ syntaxes to Java 8 for compatibility.
+    annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
+}
