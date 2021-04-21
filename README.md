@@ -18,7 +18,7 @@ A multi-module [**Mindustry**](https://github.com/Anuken/Mindustry) mod template
 5. Go through every file and replace everything necessary *(usually noted with `[subject]` in the comment)*.
 6. Track the edited file by executing `git add .`. Commit your changes by executing `git commit -m <message>`, then push your changes to GitHub by executing `git push`.
 7. 
-    1. When first cloning your IDE might scream **"The import `modname.gen` cannot be resolved"**. It is because you haven't built the project and therefore the generated classes won't be generated. Compiling the project should fix it.
+    1. At the first time cloning and refactoring, your IDE might scream **"The import `modname.gen` cannot be resolved"**. It is because you haven't built the project and therefore the generated classes won't be generated. Compiling the project should fix it.
     2. Note that annotation processors are ran before the main codes compile. Don't be afraid to refer to the currently missing generated classes before you compile; such as referring sound fields after you add a new sound.
 
 ## Compiling
